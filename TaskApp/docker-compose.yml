@@ -1,0 +1,36 @@
+# services define the containers to run in the docker
+services:
+#  This is the name of the service db: this name is given by us
+#  it indicates that it is a DB
+  db:
+
+#    image: which image to load is given by the DB here we given MySql DB
+    image: mysql:latest
+
+
+#   ports map the container's internal port (3306) to a host port (8081)
+#   this allows MySQL inside the container to be accessed from the host machine
+#   if 3306:3306 is used, it may cause a conflict if local MySQL is already running
+#   without this mapping, the DB is only accessible to other containers (not from host)
+#   Host port number : Docker container port number
+
+    ports:
+      - 8081:3306
+
+#    container will automatically restart if it stops, crashes, or the system reboots
+    restart: always
+
+
+    # environment defines MySQL configuration on container startup
+    # MYSQL_DATABASE: creates the database 'taskdb'
+    # MYSQL_USER: creates a user 'db'
+    # MYSQL_PASSWORD: sets password for 'db'
+    # MYSQL_ROOT_PASSWORD: sets root user password
+    # these must match the credentials used in application.properties
+
+    environment:
+      MYSQL_USER: db
+      MYSQL_ROOT_PASSWORD: changemeinprod!
+      MYSQL_PASSWORD: changemeinprod!
+      MYSQL_DATABASE: taskdb
+
